@@ -10,50 +10,32 @@
 # documentacion es basica.
 # ============================================================
 
-# Carga las librerias necesarias
-library(raster)
-library(rgdal)
-library(sp)
+library(raster) #carga la libreria para rasters
+library(rgdal)  #carga la libreria para archivos espaciales
+library(sp)     #carga la libreria para datos espaciales
 
-# Inicia el cronometro para medir cuanto tarda el script
-t <- proc.time()
+t <- proc.time() #se pone al inicio del codigo
 
-# Define la carpeta de trabajo
-setwd("ruta/a/tus/datos")  # <-- ajustar a tu ruta real
+setwd("ruta/a/tus/datos") #directorio donde se encuentren los datos
 
-# Lista todos los archivos .tif de la carpeta "raster"
-ras <- list.files(path = "raster", pattern = ".tif", full.names = TRUE)
+ras <- list.files(path = "raster", pattern = ".tif", full.names = TRUE) #carga los raster como una lista
 print(ras)
 
-# Carga el shapefile con los poligonos de interes
-# layer = nombre del archivo .shp sin extension
-polygon <- readOGR(dsn = getwd(), layer = "perfiles")  # <-- ajustar nombre de capa
+polygon <- readOGR(dsn = getwd(), layer = "perfiles") #carga el shapefile (ajustar nombre de capa)
 
-# Extrae los nombres de cada poligono desde la columna "Var"
-nombres <- polygon$Var
+nombres <- polygon$Var #extrae los nombres de cada poligono
 
 print(polygon)
 
-# Convierte la lista de rasters en un stack (varias capas juntas)
-s <- stack(ras)
+s <- stack(ras) #convierte la lista de raster en un stack (conjunto de capas)
 
-# Extrae el valor promedio de cada raster dentro de cada poligono
-# fun = "mean" calcula el promedio, na.rm = TRUE ignora valores vacios
-ex <- extract(s, polygon, fun = "mean", na.rm = TRUE, df = TRUE)
+ex <- extract(s, polygon, fun = "mean", na.rm = TRUE, df = TRUE) #extrae el promedio del stack dentro del shape
 
-# Agrega los nombres de los poligonos al resultado
-ex <- cbind(nombres, ex)
+ex <- cbind(nombres, ex) #agrega los nombres de los poligonos al resultado
 
 print(ex)
 
-# Guarda el resultado como CSV
-write.csv(x = ex,
-          file = "resultado.csv",
-          append = FALSE,
-          quote = FALSE,
-          sep = ",",
-          col.names = FALSE,
-          row.names = FALSE)
+write.csv(x = ex, file = "resultado.csv", append = FALSE, quote = FALSE, sep = ",",
+          col.names = FALSE, row.names = FALSE) #guarda el resultado como CSV
 
-# Detiene el cronometro y muestra cuanto tardo
-proc.time() - t
+proc.time() - t #se pone al final del codigo
