@@ -10,49 +10,26 @@
 # documentacion es basica.
 # ============================================================
 
-# Carga las librerias necesarias
-library(rgdal)
-library(foreign)
-library(dplyr)
+library(rgdal)   #carga la libreria para archivos espaciales
+library(foreign) #carga la libreria para leer .dbf
+library(dplyr)   #carga la libreria para manipulacion de datos
 
-# Define la carpeta de trabajo
-setwd("ruta/a/tus/datos")  # <-- ajustar a tu ruta real
+setwd("ruta/a/tus/datos") #directorio donde se encuentren los datos
 
-# Lista todos los archivos .dbf de la carpeta "shp"
-listfiles <- list.files(path = "shp", pattern = ".dbf", full.names = TRUE)
+listfiles <- list.files(path = "shp", pattern = ".dbf", full.names = TRUE) #carga lista de archivos .dbf
 
-# Variable vacia donde se acumulan los resultados
-resultado <- NULL
+resultado <- NULL #valor nulo para comenzar
 
-# Recorre cada archivo .dbf de la lista
-for (i in 1:length(listfiles)) {
-
-  # Lee la tabla de atributos del shapefile (.dbf)
-  p <- read.dbf(listfiles[i])
-
-  # Toma la columna de interes (ajustar segun el caso)
-  var <- p$Var
-
-  # Calcula promedio y desviacion estandar de esa columna
-  prom <- mean(var)
-  std  <- sd(var)
-
-  # Agrupa los valores y el nombre del archivo
-  valores <- cbind(prom, std)
-  archivo <- c(listfiles[i])
-
-  # Agrega la fila al resultado acumulado
-  resultado <- rbind(resultado, data.frame(archivo, valores))
-
-  # Muestra el avance en consola
-  print(resultado)
+for (i in 1:length(listfiles)) { #recorre cada archivo .dbf
+  p <- read.dbf(listfiles[i]) #lee la tabla de atributos del shapefile
+  var <- p$Var #toma la columna de interes
+  prom <- mean(var) #encuentra el promedio
+  std <- sd(var) #encuentra la desviacion estandar
+  valores <- cbind(prom, std) #crea un vector con los valores calculados
+  archivo <- c(listfiles[i]) #asigna el nombre del archivo
+  resultado <- rbind(resultado, data.frame(archivo, valores)) #agrega la fila al resultado
+  print(resultado) #muestra el avance
 }
 
-# Guarda el resultado final como CSV
-write.csv(x = resultado,
-          file = "resultado.csv",
-          append = FALSE,
-          quote = FALSE,
-          sep = ",",
-          col.names = FALSE,
-          row.names = FALSE)
+write.csv(x = resultado, file = "resultado.csv", append = FALSE, quote = FALSE, sep = ",",
+          col.names = FALSE, row.names = FALSE) #guarda el resultado como CSV
