@@ -1,4 +1,4 @@
-# R - Herramientas GIS
+# r-gis-herramientas
 
 Conjunto de herramientas y scripts desarrollados en **R** para automatizar tareas de procesamiento y análisis de información geoespacial.
 
@@ -28,6 +28,10 @@ Herramientas destinadas al procesamiento y representación de información geoes
 
 Los resultados pueden generarse como figuras y otros productos gráficos para facilitar la interpretación de los datos.
 
+### Edición
+
+Herramientas para modificar y guardar archivos espaciales, como el cambio de valores de píxeles en rasters.
+
 ## Tipos de información
 
 El proyecto está orientado principalmente al trabajo con:
@@ -53,6 +57,8 @@ Entre los paquetes utilizados se encuentran herramientas del ecosistema espacial
 
 Las herramientas de este repositorio no buscan sustituir completamente a un SIG de escritorio. El objetivo es aprovechar las capacidades de programación de R para **automatizar procedimientos específicos y reproducibles**, especialmente aquellos que deben realizarse de forma repetitiva sobre grandes cantidades de información.
 
+Los resultados generados por estos scripts fueron verificados manualmente en ArcGIS y QGIS para validar su correctitud.
+
 Esto permite integrar el análisis espacial con otras tareas de procesamiento y análisis de datos realizadas mediante programación.
 
 ## Uso
@@ -72,6 +78,8 @@ Los scripts pueden adaptarse a diferentes conjuntos de datos y necesidades de an
 ## Propósito dentro del portafolio
 
 Este repositorio forma parte de un portafolio de proyectos desarrollados para demostrar el uso de **R aplicado a problemas de ingeniería y análisis de información**.
+
+Estos scripts fueron desarrollados durante las primeras etapas de aprendizaje de R, aplicados a problemas reales de análisis espacial. Funcionan, pero su documentación es básica
 
 El interés principal no está únicamente en la programación, sino en utilizarla como una herramienta para:
 
